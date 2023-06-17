@@ -1,0 +1,19 @@
+
+body{
+    height: 100vh;
+    
+}
+
+main{
+    margin: 0 auto;
+   width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: wheat;
+    border: 2px solid black;    
+    border-radius: 1em;
+    padding: 1em;
+    box-shadow: 0 0 1em black;
+    
+}
