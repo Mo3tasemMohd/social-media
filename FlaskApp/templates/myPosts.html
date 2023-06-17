@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+    
+    <section class="posts p-4 m-auto w-50 d-flex flex-column gap-3 justify-content-around border-2 border-black ">
+
+      {% for post in data.posts %}
+      
+        <div class="post bg-dark p-2 rounded-2 text-white lead d-flex flex-column justify-content-around align-items-center">
+          <h3>{{post.title}}</h3>
+        <p>{{post.content}}</p>
+
+        <div class="d-flex justify-content-around gap-2">
+
+            <form action="/editPost/{{post.id}}" method="get">
+                <button type='submit' class="btn btn-outline-warning">Edit</a>
+            </form>
+
+            <form action="/deletePost/{{post.id}}" mehtod="Delete">
+                <button type='submit' class="btn btn-outline-danger">Delete</a>
+            </form>
+        </div>
+        </div>
+
+      {% endfor %}
+
+
+    </section>
+{% endblock %}

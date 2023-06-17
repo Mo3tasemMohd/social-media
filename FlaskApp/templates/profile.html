@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+
+{% block main %}
+
+    <form action="" method="POST" class="w-50 m-auto">
+        {{ data.form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb4">Edit Password</legend>
+            
+            <div class="form-group">
+                {{ data.form.password.label(class="form-control-label") }}
+
+                {% if data.form.password.errors %}
+                    {{ data.form.password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in data.form.password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                {% else %}
+                    {{ data.form.password(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ data.form.confirm_password.label(class="form-control-label") }}
+
+                {% if data.form.confirm_password.errors %}
+                    {{ data.form.confirm_password(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in data.form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ data.form.confirm_password(class="form-control") }}
+                    {% endif %}
+                </div>
+        </fieldset>
+        <div class="form-group mb-3">
+          
+            <button type="submit" class="btn btn-primary mt-2">Edit</button>
+        </div>
+    </form>
+{% endblock %}

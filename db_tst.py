@@ -11,6 +11,7 @@ def create_db():
 def drop_db():
     with app.app_context():
         db.drop_all()
+        db.session.commit()
 
 
 
@@ -25,7 +26,7 @@ def create_users():
 
 def create_post():
     with app.app_context():
-        user = User.query.first()
+        user = User.query.filter_by(id=4).first()
         post1 = Post(title='Post number 1', content='one one one', user_id=user.id)
         post2 = Post(title='Post number 1', content='one one one', user_id=user.id)
         post3 = Post(title='Post number 1', content='one one one', user_id=user.id)
@@ -42,10 +43,26 @@ def read_users():
         # for post in user.posts:
         #     print(post.title)
 
+def read_posts():
+    with app.app_context():
+        user = User.query.filter_by(id=1).first()
+        for ele in user.posts:
+            print(ele)
+        # for post in user.posts:
+        #     print(post.title)
+
+
+def friends():
+    with app.app_context():
+        user = Friendship.query.all()
+        for ele in user:
+            print(ele)
+        # for post in user.posts:
+        #     print(post.title)
 
 def delete_users():
     with app.app_context():
-        user = User.query.filter_by(id=2).first()
+        user = User.query.filter_by(id=1).first()
         print(user)
         db.session.delete(user)
         db.session.commit()

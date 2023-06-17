@@ -18,3 +18,17 @@ main{
     box-shadow: 0 0 1em black;
     
 }
+
+
+.friends{
+    overflow: auto;
+    position: fixed;
+    height: 80vh;
+    top: 100px;
+    right: 0%;
+    margin-right: 10px;
+    width: 15rem;
+    border: 2px solid black;
+    box-shadow: 0 0 1em black;
+    border-radius: 1rem;
+}
