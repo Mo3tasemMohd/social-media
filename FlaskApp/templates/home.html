@@ -74,12 +74,14 @@
     <section class="friends d-flex flex-column justify-content-around p-3 gap-4">
         
         {% for user in data.users %}
+        {% if user.id not in data.friends %}
             <div class="d-flex flex-column justify-content-around align-items-center bg-dark text-warning p-3 rounded-3">
                 <h4>{{user.username}}</h4>
                 <form action="/add_friend/{{current_user.id}}/{{user.id}}" method="post">
                     <button type='submit' class="btn btn-outline-warning">Add</a>
                 </form>
             </div>
+        {% endif %}
         {% endfor %}
     </section>
 

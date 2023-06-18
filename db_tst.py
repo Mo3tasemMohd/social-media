@@ -56,7 +56,7 @@ def friends():
     with app.app_context():
         user = Friendship.query.all()
         for ele in user:
-            print(ele)
+            print(ele.user_id, ele.friend_id)
         # for post in user.posts:
         #     print(post.title)
 

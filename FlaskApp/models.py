@@ -40,6 +40,8 @@ class Friendship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     friend_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # friendname = db.Column(db.String(20), unique=True, nullable=True)
+
 
 
 

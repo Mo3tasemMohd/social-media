@@ -29,17 +29,27 @@ def home():
     
 
     if form.validate_on_submit():
-        with app.app_context():
-            post = Post(title=form.title.data, content=form.content.data, user_id=current_user.id, privacy=form.privacy.data)
-            db.session.add(post)
-            db.session.commit()
-        flash(f"new post was added","success")
-        return redirect(url_for('home'))
+        print(current_user)
+        if current_user.is_authenticated:
+            with app.app_context():
+                post = Post(title=form.title.data, content=form.content.data, user_id=current_user.id, privacy=form.privacy.data)
+                db.session.add(post)
+                db.session.commit()
+            flash(f"new post was added","success")
+            return redirect(url_for('home'))
+        else:
+            return redirect(url_for('login'))
     
 
     with app.app_context():
         users = User.query.all()
+        list = db.session.query(Friendship.friend_id).filter(Friendship.user_id == current_user.id).all()
+        friends =[]
+        for ele in list:
+            friends.append(ele.friend_id)
         data['users'] = users
+        data['friends'] = friends
+        
 
 
     return render_template('home.html', data=data)
@@ -149,7 +159,9 @@ def add_friend(user_id, friend_id):
         if exists:
             flash(f"User Exists as Friend!","danger")
         else:
+            user = User.query.get(friend_id)
             friendship = Friendship(user_id=user_id, friend_id=friend_id)
+            print(friendship)
             db.session.add(friendship)
             db.session.commit()
             flash(f"User Added!","success")
@@ -170,22 +182,23 @@ def remove_friend(user_id, friend_id):
 
 
 @app.route('/friends', methods=['get'])
+@login_required
 def friends():
 
 
     data = {}
 
     with app.app_context():
-        list = db.session.query(
-            User,
-            Friendship
-        )\
-        .join(Friendship, Friendship.friend_id == User.id)\
-        .filter(User.id == current_user.id)\
-        .all()
-        # list = Friendship.query.filter_by(user_id=current_user.id).all()
-        print(list)
-        data['users'] = list
+
+        users = User.query.all()
+        list = db.session.query(Friendship.friend_id).filter(Friendship.user_id == current_user.id).all()
+        friends =[]
+        for ele in list:
+            friends.append(ele.friend_id)
+
+        print(friends)
+        data['users'] = users
+        data['friends'] = friends
     
     return render_template('friends.html', data=data)
 
@@ -193,7 +206,7 @@ def friends():
 # ------------------------- Post ENDPOINTS -----------
 
 @app.route('/addPost',  methods=['GET', 'POST'])
-# @login_required
+@login_required
 def addPost():
 
     form = PostForm()
@@ -215,7 +228,7 @@ def addPost():
 
 
 @app.route('/myPosts',  methods=['GET', 'POST'])
-# @login_required
+@login_required
 def myPosts(id=None):
 
     data = {}

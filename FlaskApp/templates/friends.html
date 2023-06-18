@@ -4,12 +4,16 @@
     <main class="w-50 my-3 m-auto  d-flex flex-column gap-3">
 
         {% for user in data.users %}
+        {% if user.id in data.friends %}
+        
         <div class="d-flex flex-column justify-content-around align-items-center bg-dark text-warning p-3 rounded-3">
             <h4>{{user.username}}</h4>
             <form action="/remove_friend/{{current_user.id}}/{{user.id}}" method="post">
-                <button type='submit' class="btn btn-outline-danger">Delete</a>
+                <button type='submit' class="btn btn-outline-danger">Unfollow</a>
                 </form>
             </div>
+            
+            {% endif %}
             {% endfor %}
         </main>
 {% endblock %}
