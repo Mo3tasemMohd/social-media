@@ -58,12 +58,13 @@
       
 
 
-    <section class="posts p-4 w-50 d-flex flex-column justify-content-around align-items-center border-2 border-black ">
+    <section class="posts p-4 w-50 d-flex  m-auto flex-column justify-content-around gap-4 border-2 border-black ">
 
       {% for post in data.posts %}
       
-        <div class="post bg">
-          <h1>{{post.title}}</h1>
+        <div class="post d-flex flex-column justify-content-around align-items-center">
+          <h4>{{post.title}}</h4>
+          <p>{{post.content}}</p>
         </div>
 
       {% endfor %}
@@ -71,10 +72,10 @@
 
 
 
-    <section class="friends d-flex flex-column justify-content-around p-3 gap-4">
+    <section class="friends d-flex flex-column justify-content-between p-3 gap-4">
         
         {% for user in data.users %}
-        {% if user.id not in data.friends %}
+        {% if user.id not in data.friends and not user.id == current_user.id %}
             <div class="d-flex flex-column justify-content-around align-items-center bg-dark text-warning p-3 rounded-3">
                 <h4>{{user.username}}</h4>
                 <form action="/add_friend/{{current_user.id}}/{{user.id}}" method="post">

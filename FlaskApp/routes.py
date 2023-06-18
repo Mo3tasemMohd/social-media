@@ -26,10 +26,19 @@ def home():
         with app.app_context():
             posts = Post.query.all()
             data['posts'] = posts
+
+        with app.app_context():
+            users = User.query.all()
+            list = db.session.query(Friendship.friend_id).filter(Friendship.user_id == current_user.id).all()
+            friends =[]
+            for ele in list:
+                friends.append(ele.friend_id)
+            data['users'] = users
+            data['friends'] = friends
     
 
     if form.validate_on_submit():
-        print(current_user)
+        
         if current_user.is_authenticated:
             with app.app_context():
                 post = Post(title=form.title.data, content=form.content.data, user_id=current_user.id, privacy=form.privacy.data)
@@ -41,14 +50,6 @@ def home():
             return redirect(url_for('login'))
     
 
-    with app.app_context():
-        users = User.query.all()
-        list = db.session.query(Friendship.friend_id).filter(Friendship.user_id == current_user.id).all()
-        friends =[]
-        for ele in list:
-            friends.append(ele.friend_id)
-        data['users'] = users
-        data['friends'] = friends
         
 
 
@@ -243,7 +244,27 @@ def myPosts(id=None):
     
     return render_template('myPosts.html', data=data)
 
+@app.route('/friendsPosts',  methods=['GET', 'POST'])
+@login_required
+def friendsPosts():
 
+    data = {}
+
+    if current_user and current_user.is_authenticated:
+        with app.app_context():
+            posts = Post.query.all()
+            data['posts'] = posts
+
+        with app.app_context():
+            
+            list = db.session.query(Friendship.friend_id).filter(Friendship.user_id == current_user.id).all()
+            friends =[]
+            for ele in list:
+                friends.append(ele.friend_id)
+            print(friends)
+            data['friends'] = friends
+
+    return render_template('friendsPost.html', data=data)
 
 
 @app.route('/deletePost/<int:id>',  methods=['GET', 'Delete'])

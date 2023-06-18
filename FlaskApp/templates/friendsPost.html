@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+
+{% block main %}
+    <main class="w-50 my-3 m-auto  d-flex flex-column gap-3">
+
+        {% for post in data.posts %}
+        {% if post.user_id in data.friends  and  not post.privacy == 'only_me' %}
+        
+            <div class="post d-flex flex-column justify-content-around align-items-center bg-dark text-warning rounded-5 p-3">
+            <h4>{{post.title}}</h4>
+          <p>{{post.content}}</p>
+          
+        </div>
+            
+            {% endif %}
+            {% endfor %}
+        </main>
+{% endblock %}

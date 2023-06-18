@@ -20,6 +20,19 @@ main{
 }
 
 
+.posts{
+    border: 2px solid rgb(255 127 127/ 0.5) !important;
+    border-radius: 1em;
+    box-shadow:  0 0 1em rgb(255 127 127/ 0.5);
+}
+
+.post{
+    border: 2px solid rgb(0 0 0/ 0.5);
+    border-radius: 1em;
+    box-shadow: 0 0 0.5em rgb(0 0 0/0.5);
+}
+
+
 .friends{
     overflow: auto;
     position: fixed;
